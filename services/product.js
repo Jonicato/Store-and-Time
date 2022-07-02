@@ -37,6 +37,7 @@ class ProductsService {
   }
 
   async findOne(id) {
+    const name = this.getTotal();
     const index = this.products.findIndex(item => item.id === id);
     if(index === -1) {
       throw new Error('Product not found');
