@@ -63,7 +63,7 @@ class UsersService {
       ... user,
       ...changes
     };
-    return this.user[index];
+    return this.users[index];
   }
 
   async delete(id) {
@@ -71,7 +71,7 @@ class UsersService {
     if (index == -1) {
       throw boom.notFound('User not found');
     }
-    this.products.splice(index, 1);
+    this.users.splice(index, 1);
     return {id};
   }
 
