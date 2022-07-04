@@ -19,7 +19,6 @@ class UsersService {
         password: faker.internet.password(),
         address: faker.address.city(),
         email: faker.internet.email(),
-        phoneNumber: faker.phone.phoneNumber(),
         registeredAt: faker.date.past(),
         isBlock: faker.datatype.boolean(),
       });
