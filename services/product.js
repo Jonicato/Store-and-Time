@@ -34,13 +34,13 @@ class ProductsService {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(this.products);
-      }, 5000);
-    })
+      }, 1000);
+    });
   }
 
   async findOne(id) {
     const product = this.products.find(item => item.id === id);
-    if(!product) {
+    if (!product) {
       throw boom.notFound('Product not found');
     }
     if (product.isBlock) {
@@ -51,7 +51,7 @@ class ProductsService {
 
   async update(id, changes) {
     const index = this.products.findIndex(item => item.id === id);
-    if(index === -1) {
+    if (index === -1) {
       throw boom.notFound('Product not found');
     }
     const product = this.products[index];
