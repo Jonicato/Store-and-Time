@@ -32,7 +32,7 @@ router.post('/',
 });
 
 router.patch('/:id',
-  validatorHandler(updateUserSchema, 'params'),
+  validatorHandler(getUserSchema, 'params'),
   validatorHandler(updateUserSchema, 'body'),
   async (req, res, next) => {
   try {

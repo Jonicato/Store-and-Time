@@ -28,7 +28,9 @@ class UsersService {
   async create(data) {
     const newUser = {
       id: faker.datatype.uuid(),
-      ... data
+      ... data,
+      registeredAt: faker.date.past(),
+      isBlock: false
     }
     this.users.push(newUser);
     return newUser;
@@ -61,7 +63,7 @@ class UsersService {
     const user = this.users[index];
     this.users[index] = {
       ... user,
-      ...changes
+      ... changes
     };
     return this.users[index];
   }

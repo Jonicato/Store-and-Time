@@ -1,4 +1,5 @@
 const express = require('express');
+const morgan = require('morgan');
 const cors = require('cors');
 const routerApi = require('./routes');
 
@@ -21,7 +22,8 @@ const options = {
   }
 }
 
-app.use(cors(options));
+app.use(morgan('dev'));
+app.use(cors());
 
 routerApi(app);
 

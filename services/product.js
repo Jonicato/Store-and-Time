@@ -24,7 +24,8 @@ class ProductsService {
   async create(data) {
     const newProduct = {
       id: faker.datatype.uuid(),
-      ... data
+      ... data,
+      img: faker.image.imageUrl(),
     }
     this.products.push(newProduct);
     return newProduct;
