@@ -49,7 +49,7 @@ router.delete('/:id',
   validatorHandler(getUserSchema, 'params'),
   async(req, res, next) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const rta = await service.delete(id);
     res.json(rta);
   } catch (error) {
