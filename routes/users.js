@@ -15,7 +15,7 @@ router.get('/:id',
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const user = await service.findOne(id);
     res.json(user);
   } catch (error) {
@@ -36,7 +36,7 @@ router.patch('/:id',
   validatorHandler(updateUserSchema, 'body'),
   async (req, res, next) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const body = req.body;
     const user = await service.update(id, body);
     res.json(user);

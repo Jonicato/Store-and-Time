@@ -70,11 +70,11 @@ class UsersService {
 
   async delete(id) {
     const index = this.users.findIndex(item => item.id === id);
-    if (index == -1) {
+    if (index === -1) {
       throw boom.notFound('User not found');
     }
     this.users.splice(index, 1);
-    return {id};
+    return { id };
   }
 
 }

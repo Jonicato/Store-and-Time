@@ -1,7 +1,7 @@
 const express = require('express');
 const ProductsService = require('./../services/product');
 const validatorHandler = require('./../middlewares/validatorHandler');
-const {createProductSchema, updateProductSchema, getProductSchema} = require('./../schemas/productSchema');
+const { createProductSchema, updateProductSchema, getProductSchema } = require('./../schemas/productSchema');
 
 const router = express.Router();
 const service = new ProductsService();
@@ -15,7 +15,7 @@ router.get('/:id',
   validatorHandler(getProductSchema, 'params'),
   async (req, res, next) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const product = await service.findOne(id);
     res.json(product);
   } catch (error) {
@@ -36,7 +36,7 @@ router.patch('/:id',
   validatorHandler(updateProductSchema, 'body'),
   async (req, res, next) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const body = req.body;
     const product = await service.update(id, body);
     res.json(product);
@@ -49,7 +49,7 @@ router.delete('/:id',
   validatorHandler(getProductSchema, 'params'),
   async (req, res, next) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const rta = await service.delete(id);
     res.json(rta);
   } catch (error) {

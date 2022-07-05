@@ -32,7 +32,7 @@ class CategoriesService {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(this.categories);
-      }, 1000)
+      }, 1000);
     });
   }
 
@@ -59,11 +59,11 @@ class CategoriesService {
 
   async delete(id) {
     const index = this.categories.findIndex(item => item.id === id);
-    if (index == -1) {
+    if (index === -1) {
       throw boom.notFound('Category not found');
     }
     this.categories.splice(index, 1);
-    return {id};
+    return { id };
   }
 
 }
