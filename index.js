@@ -6,7 +6,7 @@ const routerApi = require('./routes');
 const {logErrors, errorHandler, boomErrorHandler} = require('./middlewares/errorHandler');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000; //Si Heroku no nos manda puerto, elige por default
 
 /* Es un middleware de express que nos permite trabajar con JSON */
 app.use(express.json());
