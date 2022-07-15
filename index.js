@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const routerApi = require('./routes');
 
-const {logErrors, errorHandler, boomErrorHandler} = require('./middlewares/errorHandler');
+const {logErrors, errorHandler, boomErrorHandler, ormErrorHandler} = require('./middlewares/errorHandler');
 
 const app = express();
 const port = process.env.PORT || 3000; //Si Heroku no nos manda puerto, elige por default
@@ -28,6 +28,7 @@ app.use(cors(options));
 routerApi(app);
 
 app.use(logErrors);
+app.use(ormErrorHandler);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
