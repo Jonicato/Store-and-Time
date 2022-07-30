@@ -9,7 +9,7 @@ module.exports = {
   },
 
   //Aquí puedo revertir en caso de que haya un error
-  async down (queryInterface, Sequelize) {
+  async down (queryInterface) {
     await queryInterface.drop(USER_TABLE);
   }
 };
