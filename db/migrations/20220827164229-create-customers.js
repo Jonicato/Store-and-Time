@@ -10,6 +10,6 @@ module.exports = {
 
   //Aquí puedo revertir en caso de que haya un error
   async down (queryInterface) {
-    await queryInterface.drop(CUSTOMER_TABLE);
+    await queryInterface.dropTable(CUSTOMER_TABLE);
   }
 };
