@@ -6,37 +6,24 @@ const { models } = require('./../libs/sequelize');
 class CategoriesService {
 
   constructor() {
-    this.categories = [];
-    this.generate();
-  }
-
-  generate() {
-    const limit = 4;
-
-    for (let index = 0; index < limit; index++) {
-      this.categories.push({
-        id: faker.datatype.uuid(),
-        name: faker.commerce.productAdjective(),
-      });
-    }
+    /* this.categories = [];
+    this.generate(); */
   }
 
   async create(data) {
-    const newCategory = {
-      id: faker.datatype.uuid(),
-      ... data
-    }
-    this.categories.push(newCategory);
+    const newCategory = await models.Category.create(data);
     return newCategory;
   }
 
   async find() {
-    const rta = await models.Category.findAll();
-    return rta;
+    const categories = await models.Category.findAll();
+    return categories;
   }
 
   async findOne(id) {
-    const category = this.categories.find(item => item.id === id);
+    const category = await models.Category.findByPk(id, {
+      include: ['products']
+    });
     if (!category) {
       throw boom.notFound('Category not found');
     }
