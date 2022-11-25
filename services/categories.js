@@ -31,24 +31,14 @@ class CategoriesService {
   }
 
   async update(id, changes) {
-    const index = this.categories.findIndex(item => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('Category not found');
-    }
-    const category = this.categories[index];
-    this.categories[index] = {
-      ... category,
-      ... changes
-    };
-    return this.categories[index];
+    const category = await this.findOne(id);
+    const rta = await category.update(changes);
+    return rta;
   }
 
   async delete(id) {
-    const index = this.categories.findIndex(item => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('Category not found');
-    }
-    this.categories.splice(index, 1);
+    const category = await this.findOne(id);
+    await category.destroy();
     return { id };
   }
 

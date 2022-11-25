@@ -5,11 +5,11 @@ const { models } = require('./../libs/sequelize');
 class UsersService {
 
   constructor() {
-    this.users = [];
-    this.generate();
+    /* this.users = [];
+    this.generate(); */
   }
 
-  generate() {
+  /* generate() {
     const limit = 100;
 
     for (let index = 0; index <limit; index++) {
@@ -24,7 +24,7 @@ class UsersService {
         isBlock: faker.datatype.boolean(),
       });
     }
-  }
+  } */
 
   async create(data) {
     const newUser = await models.User.create(data);

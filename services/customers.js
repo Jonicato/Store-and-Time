@@ -28,14 +28,14 @@ class CustomerService {
   }
 
   async update(id, changes) {
-    const model = await this.findOne(id);
-    const rta = await model.update(changes);
+    const customer = await this.findOne(id);
+    const rta = await customer.update(changes);
     return rta;
   }
 
   async delete(id) {
-    const model = await this.findOne(id);
-    await model.destroy();
+    const customer = await this.findOne(id);
+    await customer.destroy();
     return { rta: true };
   }
 }
