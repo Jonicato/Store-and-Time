@@ -1,6 +1,6 @@
 'use strict';
 
-const { OrderSchema, ORDER_TABLE, Order} = require('./../models/orderModel')
+const { OrderSchema, ORDER_TABLE} = require('./../models/orderModel')
 
 module.exports = {
   //Aquí se va a hacer la creación
