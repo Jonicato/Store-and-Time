@@ -1,7 +1,7 @@
 const express = require('express');
 const OrdersService = require('./../services/orders');
 const validatorHandler = require('./../middlewares/validatorHandler');
-const { createOrderSchema, getOrderSchema } = require('./../schemas/orderSchema');
+const { createOrderSchema, getOrderSchema, addItemSchema } = require('./../schemas/orderSchema');
 
 const router = express.Router();
 const service = new OrdersService();
@@ -26,9 +26,25 @@ router.get('/:id',
 router.post('/',
   validatorHandler(createOrderSchema, 'body'),
   async (req, res) => {
-  const body = req.body;
-  const newOrder = await service.create(body);
-  res.status(201).json(newOrder);
+    try {
+      const body = req.body;
+      const newOrder = await service.create(body);
+      res.status(201).json(newOrder);
+    } catch (error) {
+      next(error);
+    }
+});
+
+router.post('/item',
+  validatorHandler(addItemSchema, 'body'),
+  async (req, res) => {
+    try {
+      const body = req.body;
+      const newItem = await service.addItem(body);
+      res.status(201).json(newItem);
+    } catch (error) {
+      next(error);
+    }
 });
 
 /* router.patch('/:id',
