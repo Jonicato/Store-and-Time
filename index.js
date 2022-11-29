@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const routerApi = require('./routes');
+const { checkApiKey } = require('./middlewares/authHandler')
 
 const {logErrors, errorHandler, boomErrorHandler, ormErrorHandler} = require('./middlewares/errorHandler');
 
@@ -24,6 +25,10 @@ const options = {
 
 app.use(morgan('dev'));
 app.use(cors(options));
+
+app.get('/nueva-ruta', checkApiKey, (req, res) => {
+  res.send('Hi! Im a new route nwn');
+});
 
 routerApi(app);
 
