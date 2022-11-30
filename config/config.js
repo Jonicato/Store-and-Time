@@ -8,7 +8,8 @@ const config = {
   dbHost: process.env.PG_DB_HOST,
   dbName: process.env.PG_DB_NAME,
   dbPort: process.env.PG_DB_PORT,
-  apiKey: process.env.API_KEY
+  apiKey: process.env.API_KEY,
+  jwtSecret: process.env.JWT_SECRET,
 };
 
 module.exports = { config };
