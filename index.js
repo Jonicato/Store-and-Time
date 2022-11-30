@@ -26,6 +26,8 @@ const options = {
 app.use(morgan('dev'));
 app.use(cors(options));
 
+require('./utils/auth');
+
 app.get('/nueva-ruta', checkApiKey, (req, res) => {
   res.send('Hi! Im a new route nwn');
 });
