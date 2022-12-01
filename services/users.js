@@ -59,7 +59,12 @@ class UsersService {
 
   async update(id, changes) {
     const user = await this.findOne(id);
+    if (changes.password) {
+      const hash = await bcrypt.hash(changes.password, 10);
+      changes.password = hash;
+    }
     const rta = await user.update(changes);
+    delete rta.dataValues.password;
     return rta;
   }
 

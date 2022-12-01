@@ -7,8 +7,29 @@ function checkApiKey(req, res, next) {
   if( apiKey === config.apiKey ) {
     next();
   } else {
+    console.log('Aquí está entrando alch');
     next(boom.unauthorized());
   }
 }
 
-module.exports = { checkApiKey }
+function checkAdminRole(req, res, next) {
+  const user = req.user;
+  if (user.role === 'admin') {
+    next();
+  } else {
+    next(boom.forbidden('Se requieren permisos de administrador'));
+  }
+}
+
+function checkRoles(...roles) {
+  return(req, res, next) => {
+    const user = req.user;
+    if (roles.includes(user.role)) {
+      next();
+    } else {
+      next(boom.forbidden('No cuenta con los permisos necesarios'));
+    }
+  }
+}
+
+module.exports = { checkApiKey, checkAdminRole, checkRoles }

@@ -1,7 +1,10 @@
 const express = require('express');
+const passport = require('passport');
+
 const OrdersService = require('./../services/orders');
 const validatorHandler = require('./../middlewares/validatorHandler');
 const { createOrderSchema, getOrderSchema, addItemSchema } = require('./../schemas/orderSchema');
+const { checkRoles } = require('./../middlewares/authHandler');
 
 const router = express.Router();
 const service = new OrdersService();
@@ -24,10 +27,14 @@ router.get('/:id',
 });
 
 router.post('/',
-  validatorHandler(createOrderSchema, 'body'),
-  async (req, res) => {
+  passport.authenticate('jwt', {session: false}),
+  // checkRoles('admin', 'customer'),
+  // validatorHandler(createOrderSchema, 'body'),
+  async (req, res, next) => {
     try {
-      const body = req.body;
+      const body = {
+        userId: req.user.sub
+      }
       const newOrder = await service.create(body);
       res.status(201).json(newOrder);
     } catch (error) {
