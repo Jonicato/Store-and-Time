@@ -19,6 +19,7 @@ class AuthService {
       throw boom.unauthorized();
     }
     delete user.dataValues.password;
+    delete user.dataValues.recoveryToken;
     return user;
   }
 
@@ -31,28 +32,51 @@ class AuthService {
     return { user, token };
   }
 
-  async sendMail(email) {
+  async sendRecovery(email) {
     const user = await service.findByEmail(email);
     if(!user) {
       throw boom.unauthorized();
     }
+    const payload = { sub: user.id };
+    const token = jwt.sign(payload, config.jwtRecovery, {expiresIn: '15min'});
+    const link = `http://myfrontend.com/recovery?token=${token}`;
+    await service.update(user.id, {recoveryToken: token});
+    const mail = {
+      from: config.devEmail,
+      to: `${user.email}`,
+      subject: "Email para recuperar contraseña",
+      html: `<b,>Ingresa a este link => ${link}</b`,
+    }
+    const rta = await this.sendMail(mail);
+    return rta;
+  }
+
+  async changePassword(token, newPassword) {
+    try {
+      const payload = jwt.verify(token, config.jwtRecovery);
+      const user = await service.findOne(payload.sub);
+      if(user.recoveryToken !== token) {
+        throw boom.unauthorized();
+      }
+      await service.update(user.id, {recoveryToken: null, password: newPassword});
+      return { message: 'password changed'};
+    } catch (error) {
+      throw boom.unauthorized();
+    }
+  }
+
+  async sendMail(infoMail) {
     const transporter = nodemailer.createTransport({
       host: config.devMailer,
       port: 465,
-      secure: true, // true for 465, false for other ports
+      secure: true,
       auth: {
         user: config.devEmail,
         pass: config.devPass
       },
     });
 
-    await transporter.sendMail({
-      from: config.devEmail, // sender address
-      to: `${user.email}`, // list of receivers
-      subject: "Tu código funcionó", // Subject line
-      text: "Ahora eres bien pro, perro!", // plain text body
-      html: "<b>Ahora eres bien pro, perro!</b>", // html body
-    });
+    await transporter.sendMail(infoMail);
     return { message: 'mail sent' };
   }
 }
